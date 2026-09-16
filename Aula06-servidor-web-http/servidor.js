@@ -2,7 +2,7 @@ import http from 'http';
 
 const servidor = http.createServer((req, res) =>{
     
-    console.log(`[LOG Método recebido: ${req.method} | ${req.url}]`);
+    console.log(`[LOG] Método recebido: ${req.method} | ${req.url}`);
     
     const cabecalhoPadrao = {
         'X-Content-Type-Options' : 'nosniff',
