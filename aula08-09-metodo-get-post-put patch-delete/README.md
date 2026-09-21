@@ -1,232 +1,311 @@
-Aula 08-09 — Métodos GET, POST, PATCH e DELETE
+Aula 08 e 09 — API REST com NestJS
+
 📚 Sobre a aula
-Nesta aula foi desenvolvido um exemplo de API utilizando NestJS e os principais métodos HTTP utilizados em aplicações backend.
 
-O projeto simula um sistema simples de gerenciamento de pedidos, permitindo consultar, cadastrar, atualizar e remover pedidos.
+Nesta atividade foram praticados os principais métodos HTTP usados ​​na construção de uma API REST utilizando NestJS.
 
-🎯 Objetivos
-Compreender os principais métodos HTTP.
-Criar rotas utilizando NestJS.
-Utilização de Controladores e Serviços.
-Trabalhar com parâmetros de rotação.
-obterr dados através do @Body().
-Crie um DTO para organização de dados.
-Trabalhar com respostas HTTP.
-Implementar operações básicas de CRUD.
+Os testes foram realizados com Postman e Insomnia, utilizando uma API local realizada na porta 3000.
+
 🛠️ Tecnologias utilizadas
+
 Node.js
+
 NestJS
+
 TypeScript
-npm
-Visual Studio Code
-📁 Estrutura do projeto
-aula08-09-metodo-get-post-put-patch-delete/
-├── src/
-│   ├── dto/
-│   │   └── criar-convidados.dto.ts
-│   ├── app.controller.ts
-│   ├── app.module.ts
-│   ├── app.service.ts
-│   ├── convidados.controller.ts
-│   ├── convidados.service.ts
-│   └── main.ts
-├── test/
-├── package.json
-├── tsconfig.json
-└── README.md
 
-## API Reference
+Carteiro
 
-#### Get all items
+Insônia
 
-```http
-  GET /api/items
+API REST
 
-  🌐 Métodos HTTP utilizados
-GET
+JSON
 
-Utilizado para consultar os convidados cadastrados.
+🚀 Execução da aplicação
 
-GET /convidados
-
-Retorna a lista de convidados armazenada no serviço.
-
-POST
-
-Utilizado para cadastrar um novo convidado.
-
-POST /convidados
-
-Exemplo de dados enviados:
-
-{
-  "nome": "Gustavo",
-  "idade": 20
-}
-
-O projeto utiliza um DTO para organizar os dados recebidos:
-
-export class CriarConvidadoDto {
-  nome: string;
-  idade: number;
-}
-PATCH
-
-Utilizado para atualizar a idade de um convidado específico.
-
-PATCH /convidados/:id
-
-Exemplo:
-
-PATCH /convidados/1
-
-Com os dados:
-
-{
-  "idade": 24
-}
-DELETE
-
-Utilizado para remover um convidado pelo seu ID.
-
-DELETE /convidados/:id
-
-Exemplo:
-
-DELETE /convidados/1
-
-A rota também utiliza o código de status HTTP 204 para indicar que a operação foi concluída sem conteúdo na resposta.
-
-👥 Dados utilizados
-
-Durante a aula foi criada uma lista de convidados para simular os dados de uma aplicação:
-
-[
-  { id: 1, nome: 'Alice', idade: 23 },
-  { id: 2, nome: 'Enzo', idade: 19 },
-  { id: 3, nome: 'Jamily', idade: 20 },
-  { id: 4, nome: 'Alessandra', idade: 18 },
-  { id: 5, nome: 'Hudson', idade: 21 }
-]
-
-Os dados são armazenados temporariamente em memória através do ConvidadosService.
-
-⚙️ Controller
-
-O ConvidadosController é responsável por definir as rotas da aplicação.
-
-Exemplo:
-
-@Controller('convidados')
-export class ConvidadosController {
-
-Dentro do controller foram implementados os métodos:
-
-@Get() — listar convidados
-@Post() — cadastrar convidado
-@Patch() — atualizar idade
-@Delete() — remover convidado
-🔧 Service
-
-O ConvidadosService concentra as operações realizadas sobre os convidados.
-
-Entre as operações desenvolvidas estão:
-
-findAll()
-
-Responsável por retornar todos os convidados.
-
-findOne(id)
-
-Responsável por localizar um convidado pelo ID.
-
-atualizarIdade(id, idade)
-
-Responsável por alterar a idade de um convidado.
-
-removerConvidado(id)
-
-Responsável por remover um convidado da lista.
-
-❗ Tratamento de erros
-
-Foi utilizado o NotFoundException do NestJS para tratar situações em que um convidado não é encontrado.
-
-Exemplo:
-
-throw new NotFoundException(
-  `Convidado com ID ${id} não encontrado`
-);
-
-Dessa forma, a aplicação consegue informar ao cliente quando o ID informado não existe.
-
-🚀 Como executar o projeto
-
-Primeiro, instale as dependências:
-
-npm install
-
-Depois, execute o projeto em modo de desenvolvimento:
+A aplicação foi realizada em modo de desenvolvimento:
 
 npm run start:dev
 
-A API estará disponível em:
+A API ficou disponível em:
 
 http://localhost:3000
 
-As rotas de convidados podem ser acessadas através de:
+Durante a inicialização, o terminal confirmou as seguintes rotas:
 
-http://localhost:3000/convidados
-🧪 Testando a API
+Rota mapeada {/status, GET} Rota mapeada {/convidados, GET} Rota mapeada {/convidados, POST} Rota mapeada {/convidados/:id, PATCH} Rota mapeada {/convidados/:id, DELETE} Aplicativo Nest iniciado com sucesso
 
-As requisições podem ser realizadas utilizando ferramentas como:
+O terminal também registrou operações realizadas na API, como:
 
-Insomnia
-Postman
-Thunder Client
-REST Client
-Navegador, para requisições GET
-Exemplos
+[ADMINISTRADOR]: Removendo Convidado ID: 5 [ADMINISTRADOR]: Removendo Convidado ID: 2 [ADMINISTRADOR]: Atualizando o id do Convidado 5
 
-Listar convidados
+📌 Pontos finais desenvolvidos
 
-GET http://localhost:3000/convidados
+Método
 
-Cadastrar convidado
+Ponto final
 
-POST http://localhost:3000/convidados
-{
-  "nome": "Gustavo",
-  "idade": 20
-}
+‐
 
-Atualizar convidado
+PEGAR
 
-PATCH http://localhost:3000/convidados/1
-{
-  "idade": 25
-}
+/convidados
 
-Remover convidado
+Listar todos os osLO
 
-DELETE http://localhost:3000/convidados/1
-📖 Conceitos aprendidos
+PUBLICAR
 
-Nesta aula foram praticados conceitos importantes de desenvolvimento backend:
+/convidados
 
-APIs REST
-Métodos HTTP
-Controllers
-Services
-DTOs
-Parâmetros de rota
-@Body()
-@Param()
-Status HTTP
-Tratamento de exceções
-Organização de projetos NestJS
-👨‍💻 Autor
+Cadastrar um novodi
 
-Gustavo Castilho Machado
+CORREÇÃO
 
-Projeto desenvolvido para as aulas de desenvolvimento backend.
+/convidados/:id
+
+Atualizar dados de um convidado
+
+EXCLUIR
+
+/convidados/:id
+
+Remover um convidado
+
+🔎 Método GET
+
+O GET foi utilizado para consultar os cadastros solicitados.
+
+Requisição
+
+OBTER http://localhost:3000/convidados
+
+Resultado
+
+A API retornou 200 OK com uma lista em JSON.
+
+Exemplo registrado nos testes:
+
+[ { "id": 1, "nome": "Alice", "idade": 23 }, { "id": 2, "nome": "Enzo", "idade": 19 }, { "id": 3, "nome": "Jamily", "idade": 20 }, { "id": 4, "nome": "Alessandra", "idade": 18 }, { "id": 5, "nome": "Hudson", "idade": 29 } ]
+
+➕ Método POST
+
+O POST foi utilizado para adicionar um novo convidado.
+
+Requisição
+
+POSTAR http://localhost:3000/convidados
+
+Corpo
+
+{ "nome": "Gustavo", "idade": 21 }
+
+Resultado
+
+Retorno:
+
+201 Criado
+
+Resposta respondida no teste:
+
+{ "mensagem": "Convidado Gustavo adicionado com sucesso", "dados": { "nome": "Gustavo", "idade": 21 } }
+
+✏️ Método PATCH
+
+O PATCH foi utilizado para atualizar parcialmente os dados de um convidado.
+
+Requisição
+
+PATCH http://localhost:3000/convidados/5
+
+Corpo
+
+{ "idade": 22 }
+
+Resultado
+
+Retorno:
+
+200 OK
+
+Resposta:
+
+{ "id": 5, "nome": "Hudson", "idade": 22 }
+
+O terminal registrou a atualização do convidado de ID 5.
+
+🗑️ Método DELETE
+
+O DELETE foi utilizado para remover um convidado pelo ID.
+
+Requisição
+
+EXCLUIR http://localhost:3000/convidados/2
+
+Resultado
+
+Retorno:
+
+204 Sem conteúdo
+
+Esse status indica que a exclusão foi realizada sem conteúdo no corpo da resposta.
+
+O terminal registrou:
+
+[ADMINISTRADOR]: Removendo ID do Convidado: 2
+
+Também foi realizado um teste de exclusão para o ID 5:
+
+[ADMINISTRADOR]: Removendo ID do Convidado: 5
+
+🧪 Testes no Postman e Insomnia
+
+Foram testadas as rotas utilizando duas ferramentas.
+
+Carteiro
+
+Foram definidas requisições para:
+
+GET /convidados
+
+POST /convidados
+
+PATCH /convidados/5
+
+APAGAR /convidados/5
+
+Os testes obtiveram respostas de sucesso, incluindo:
+
+200 OK 201 Criado 204 Sem conteúdo
+
+Insônia
+
+Também foram realizados testes com:
+
+GET /convidados
+
+POST /convidados
+
+PATCH /convidados/5
+
+DELETE /convidados/2
+
+boa luas:
+
+Operação
+
+Status
+
+PEGAR
+
+200 OK
+
+PUBLICAR
+
+201 Criado
+
+CORREÇÃO
+
+200 OK
+
+EXCLUIR
+
+204 Sem conteúdo
+
+📦 Estrutura dos dados
+
+Cada convidado possui uma estrutura simples:
+
+{ "id": 1, "nome": "Alice", "idade": 23 }
+
+Campo
+
+Tipo
+
+Descrição
+
+eu ia
+
+número
+
+Identificador do
+
+nome
+
+corda
+
+Nome do
+
+idade
+
+número
+
+Idade do
+
+📊 Status HTTP utilizado
+
+Status
+
+Significado
+
+Utilidade
+
+200 OK
+
+Requisição realizada com sucesso
+
+RECEBA O PATCH
+
+201 Criado
+
+Recurso criado com sucesso
+
+PUBLICAR
+
+204 Sem conteúdo
+
+Operação concluída sem conteúdo de resposta
+
+EXCLUIR
+
+🔄 CRUD praticado
+
+A atividade incluiu as quatro operações básicas de um CRUD:
+
+Criar → PUBLICAR
+
+Leia → OBTENHA
+
+Atualização → Correção
+
+Excluir → EXCLUIR
+
+🎯 Objetivo da atividade
+
+O objetivo foi praticar o desenvolvimento e o consumo de uma API REST com NestJS, compreendendo como os principais métodos HTTP funcionam na prática.
+
+Também foram praticados:
+
+criação de rotas;
+
+envio de dados em JSON;
+
+consulta de dados;
+
+atualização parcial;
+
+exclusão por ID;
+
+interpretação dos códigos de status HTTP;
+
+testes de API com Postman e Insomnia;
+
+envio das operações pelos logs do terminal.
+
+Conclusão
+
+Nas aulas 08 e 09 foi possível colocar em prática os conceitos fundamentais de APIs REST utilizando NestJS.
+
+A aplicação permitiu cadastrar, consultar, atualizar e remover solicitações. Os testes realizados no Postman e no Insomnia obtiveram respostas de sucesso, enquanto os logs do terminal permitiram acompanhar as operações realizadas pela aplicação.
+
+Com isso, foi possível entender na prática o funcionamento das operações GET, POST, PATCH e DELETE em uma API REST.
