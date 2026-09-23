@@ -30,4 +30,4 @@ export class ConvidadosController {
         console.log(`[ADMINISTRADOR]: Removendo Convidado ID: ${id}`);
         this.convidadosService.removerConvidado(+id);
     }
-}
+} 
