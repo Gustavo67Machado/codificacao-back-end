@@ -4,3 +4,4 @@ import { MidiaController } from "./midia.controller.js";
 @Module({
     controllers:[MidiaController]
 })
+export class MidiaModule{}

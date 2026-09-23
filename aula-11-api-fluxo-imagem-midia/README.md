@@ -1,118 +1,184 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Aula 11 - API de Fluxo de Imagem e Mídia
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 📚 Sobre a aula
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Nesta aula foi desenvolvido um fluxo de upload de arquivos utilizando **NestJS**, permitindo o envio de imagens através de uma API.
 
-## Description
+O projeto utiliza o **Multer** para receber e armazenar os arquivos enviados, além do **UUID** para gerar nomes únicos para cada arquivo.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## 🎯 Objetivo
 
-```bash
-$ npm install
-```
+Criar uma API capaz de:
 
-## Compile and run the project
+- Receber arquivos através de requisições HTTP;
+- Realizar upload de imagens;
+- Validar os tipos de arquivos permitidos;
+- Limitar o tamanho dos arquivos;
+- Gerar nomes únicos para os arquivos;
+- Armazenar os arquivos localmente;
+- Retornar informações sobre o arquivo enviado.
 
-```bash
-# development
-$ npm run start
+---
 
-# watch mode
-$ npm run start:dev
+## 🛠️ Tecnologias utilizadas
 
-# production mode
-$ npm run start:prod
-```
+- Node.js
+- NestJS
+- TypeScript
+- Multer
+- UUID
+- Express
+- Postman / Insomnia
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+## 📁 Estrutura principal
 
-# e2e tests
-$ npm run test:e2e
+```text
+aula-11-api-fluxo-imagem-midia/
+│
+├── src/
+│   ├── app.controller.ts
+│   ├── app.controller.spec.ts
+│   ├── app.module.ts
+│   ├── app.service.ts
+│   ├── main.ts
+│   ├── media.controller.ts
+│   └── media.module.ts
+│
+├── uploads/
+│   └── arquivos enviados
+│
+├── test/
+│
+├── package.json
+├── package-lock.json
+├── nest-cli.json
+├── tsconfig.json
+└── README.md
 
-# test coverage
-$ npm run test:cov
-```
+📤 Endpoint de Upload
 
-## Deployment
+O endpoint responsável pelo envio de arquivos é:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+POST /media/upload
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+A requisição utiliza multipart/form-data.
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+O campo utilizado para enviar o arquivo é:
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+arquivo
+Exemplo
+POST http://localhost:3000/media/upload
 
-## Observability
+Body:
 
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
+multipart/form-data
 
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
+arquivo = imagem.jpg
+📸 Validação dos arquivos
 
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
+A API permite os seguintes formatos de imagem:
 
-This project is already instrumented. Create a free account at [observe.nestjs.com](https://observe.nestjs.com), add an application, and paste the generated app key and secret into the `ObserveModule.forRoot()` call in `src/app.module.ts`.
+.jpg
+.jpeg
+.png
+.gif
+.webp
 
-The free plan needs no payment details and covers 300,000 events a month. You can also browse the [live demo](https://www.observe-demo.nestjs.com/dashboard) first - the whole dashboard over a busy service's data, with nothing to install.
+Arquivos com outros formatos são rejeitados.
 
-## Resources
+Também foi configurado um limite de tamanho de:
 
-Check out a few resources that may come in handy when working with NestJS:
+2 MB
+🔐 Nome único dos arquivos
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observe](https://observe.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Para evitar conflitos entre arquivos com o mesmo nome, a aplicação utiliza o pacote uuid.
 
-## Support
+O arquivo recebe um identificador único antes de ser armazenado.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Exemplo:
 
-## Stay in touch
+adc08c9f-b8e0-4b2e-83ca-5e4ed5bb0f95.jpg
+📂 Armazenamento
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Os arquivos enviados são armazenados na pasta:
 
-## License
+uploads/
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+A aplicação também disponibiliza essa pasta através da rota:
+
+/api/uploads
+
+Assim, após o upload, o arquivo pode ser acessado através de uma URL semelhante a:
+
+http://localhost:3000/api/uploads/nome-do-arquivo.jpg
+✅ Teste realizado
+
+Durante os testes foi enviado uma imagem através do Postman/Insomnia utilizando:
+
+POST http://localhost:3000/media/upload
+
+A API retornou:
+
+201 Created
+
+E uma resposta semelhante a:
+
+{
+  "filename": "arquivo",
+  "size": 688511,
+  "url": "http://localhost:3000/api/uploads/arquivo.jpg"
+}
+
+O arquivo também foi armazenado corretamente dentro da pasta uploads.
+
+🚀 Execução do projeto
+
+Para instalar as dependências:
+
+npm install
+
+Para iniciar o projeto em modo de desenvolvimento:
+
+npm run start:dev
+
+A aplicação será executada em:
+
+http://localhost:3000
+📌 Conceitos aprendidos
+
+Nesta aula foram trabalhados os seguintes conceitos:
+
+Upload de arquivos com NestJS;
+FileInterceptor;
+UploadedFile;
+multipart/form-data;
+Integração com Multer;
+Armazenamento local de arquivos;
+Validação de extensão/MIME type;
+Limitação de tamanho de arquivo;
+Geração de identificadores com UUID;
+Criação de módulos e controllers no NestJS;
+Disponibilização de arquivos estáticos;
+Testes de API utilizando Postman/Insomnia.
+
+👨‍💻 Autor
+
+Gustavo Castilho Machado
+
+Estudante de desenvolvimento Back-End.
+
+Este projeto foi desenvolvido como parte dos estudos de programação e desenvolvimento de APIs utilizando Node.js e NestJS.
+## FAQ
+
+#### Question 1
+
+Answer 1
+
+#### Question 2
+
+Answer 2
+

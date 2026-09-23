@@ -12,4 +12,4 @@ async function bootstrap() {
   await app.listen(3000);
   console.log('Aplicação rodando em https://localhost:3000');
 }
-await bootstrap();
+bootstrap();
