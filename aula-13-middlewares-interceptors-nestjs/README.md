@@ -44,7 +44,7 @@ aula-13-middlewares-interceptors-nestjs/
 └── README.md
 ```
 
-## 🔐 Middleware de autenticação/autorização
+## 🔐 Middleware de autenticação/autorização 
 
 Foi criado um middleware chamado `LoggerMiddleware`.
 
