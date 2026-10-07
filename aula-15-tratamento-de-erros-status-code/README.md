@@ -1,118 +1,256 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+Aula 15 --- Tratamento de Erros e Status Codes
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+📚 Sobre a aula
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Nesta aula foi desenvolvido um exemplo de API utilizando NestJS, com
+foco no tratamento de erros, utilização de status codes HTTP e
+organização da aplicação com Controllers e Services.
 
-## Description
+Também foi utilizado o Logger do NestJS para registrar situações de
+erro durante as requisições.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+🎯 Objetivos
 
-## Project setup
+Trabalhar com tratamento de erros no NestJS.
 
-```bash
-$ npm install
-```
+Utilizar BadRequestException e NotFoundException.
 
-## Compile and run the project
+Trabalhar com códigos de status HTTP.
 
-```bash
-# development
-$ npm run start
+Validar parâmetros recebidos pela API.
 
-# watch mode
-$ npm run start:dev
+Utilizar Logger para registrar ocorrências.
 
-# production mode
-$ npm run start:prod
-```
+Separar responsabilidades entre Controller e Service.
 
-## Run tests
+Criar uma rota para consulta de produtos.
 
-```bash
-# unit tests
-$ npm run test
+🛠️ Tecnologias utilizadas
 
-# e2e tests
-$ npm run test:e2e
+Node.js
 
-# test coverage
-$ npm run test:cov
-```
+NestJS
 
-## Deployment
+TypeScript
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+HTTP / REST
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Logger do NestJS
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+Thunder Client
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+📁 Estrutura principal
 
-## Observability
+aula-15-tratamento-de-erros-status-code/
+├── src/
+│   ├── app.controller.ts
+│   ├── app.module.ts
+│   ├── app.service.ts
+│   ├── main.ts
+│   ├── produtos.controller.ts
+│   └── produtos.service.ts
+├── package.json
+├── package-lock.json
+└── README.md
 
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
+🔹 AppService
 
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
+Foi mantido um serviço simples para verificar se o servidor está ativo:
 
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
+@Injectable()
+export class AppService {
+  getHello(): string {
+    return 'Status: servidor ativo!';
+  }
+}
 
-This project is already instrumented. Create a free account at [observe.nestjs.com](https://observe.nestjs.com), add an application, and paste the generated app key and secret into the `ObserveModule.forRoot()` call in `src/app.module.ts`.
+🔹 ProdutosService
 
-The free plan needs no payment details and covers 300,000 events a month. You can also browse the [live demo](https://www.observe-demo.nestjs.com/dashboard) first - the whole dashboard over a busy service's data, with nothing to install.
+Foi criado um serviço responsável por armazenar e listar produtos.
 
-## Resources
+Produtos utilizados nos testes:
 
-Check out a few resources that may come in handy when working with NestJS:
+produtos = [
+  { id: 1, nome: 'Teclado Mecânico', preco: 199.99 },
+  { id: 2, nome: 'Mouse Gamer', preco: 99.99 },
+  { id: 3, nome: 'Monitor 144Hz', preco: 899.99 },
+  { id: 4, nome: 'Headset RGB', preco: 149.99 },
+  { id: 5, nome: 'Cadeira Gamer', preco: 499.99 },
+];
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observe](https://observe.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+O método listaProduto() retorna a lista de produtos.
 
-## Support
+🔹 ProdutosController
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Foram criadas as rotas:
 
-## Stay in touch
+GET /produtos
+GET /produtos/:id
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+A rota com ID consulta um produto específico.
 
-## License
+O ID recebido pela URL é convertido para número:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+const id = Number(idProd);
+
+Quando o ID não é numérico:
+
+throw new BadRequestException(
+  'ID inválido. Deve ser um número inteiro!'
+);
+
+Quando o produto não é encontrado:
+
+throw new NotFoundException(
+  `Produto com ID ${id} não encontrado.`
+);
+
+🚨 Tratamento de erros
+
+Produto existente
+
+Requisição:
+
+GET /produtos/1
+
+Resposta:
+
+{
+  "id": 1,
+  "nome": "Teclado Mecânico",
+  "preco": 199.99
+}
+
+Status: 200 OK
+
+Produto inexistente
+
+Requisição:
+
+GET /produtos/99
+
+Resposta:
+
+{
+  "message": "Produto com ID 99 não encontrado.",
+  "error": "Not Found",
+  "statusCode": 404
+}
+
+Status: 404 Not Found
+
+ID inválido
+
+Quando é informado um ID que não pode ser convertido para número, a
+aplicação utiliza:
+
+Status: 400 Bad Request
+
+📝 Logger
+
+O Logger do NestJS foi utilizado para registrar situações importantes:
+
+private readonly logger = new Logger(ProdutosController.name);
+
+Exemplo de aviso:
+
+this.logger.warn(
+  `Tentativa de busca com ID não numérico: ${idProd}`
+);
+
+E também:
+
+this.logger.warn(
+  `Produto com ID ${id} não localizado.`
+);
+
+Esses registros ajudam a identificar problemas durante a execução da
+API.
+
+⚙️ Configuração do módulo
+
+O AppModule foi configurado com os Controllers e Services da
+aplicação:
+
+@Module({
+  imports: [],
+  controllers: [AppController, ProdutosController],
+  providers: [AppService, ProdutoService],
+})
+export class AppModule {}
+
+Também foi utilizado o ObserveModule para instrumentação da aplicação.
+
+🌐 Inicialização do servidor
+
+A aplicação utiliza a porta definida pela variável de ambiente PORT
+ou, caso ela não exista, a porta 3000:
+
+await app.listen(process.env.PORT ?? 3000);
+
+Para instalar as dependências:
+
+npm install
+
+Para executar em modo de desenvolvimento:
+
+npm run start:dev
+
+🧪 Testes realizados
+
+Os endpoints foram testados utilizando o Thunder Client.
+
+Rota principal
+
+GET http://localhost:3000/
+
+Listagem de produtos
+
+GET http://localhost:3000/produtos
+
+Produto existente
+
+GET http://localhost:3000/produtos/1
+
+Resultado:
+
+200 OK
+
+Produto inexistente
+
+GET http://localhost:3000/produtos/99
+
+Resultado:
+
+404 Not Found
+
+📌 Conceitos aprendidos
+
+BadRequestException
+
+NotFoundException
+
+Logger
+
+Status Codes HTTP
+
+Controllers no NestJS
+
+Services no NestJS
+
+Injeção de dependências
+
+Validação de parâmetros
+
+Tratamento de erros
+
+Organização de uma API REST
+
+Testes de endpoints com Thunder Client
+
+👨‍💻 Autor
+
+Gustavo Castilho Machado
+
+Projeto desenvolvido como atividade prática do curso de Programador
+Full Stack.

@@ -22,12 +22,13 @@ export class ProdutosController{
         if(isNaN(id)){
             this.logger.warn(`Tentativa de busca com ID não numérico: ${idProd}`);
             throw new BadRequestException('ID inválido. Deve ser um número inteiro!');
-            const produto = this.produtos().find((produto) => produto.id === id);
-            if(!produto){
-                this.logger.warn(`Produto com ID ${id} não Localizado.`);
-                throw new NotFoundException(`Produto com ID ${id} não encontrado.`);
-            }
         }
+        const produto = this.produtos().find((produto) => produto.id === id);
+        if(!produto){
+            this.logger.warn(`Produto com ID ${id} não Localizado.`);
+            throw new NotFoundException(`Produto com ID ${id} não encontrado.`);
+        }
+        return produto;
     }
 
 }
