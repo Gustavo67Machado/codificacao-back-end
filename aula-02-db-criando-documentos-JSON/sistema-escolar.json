@@ -1,0 +1,22 @@
+{
+    "nome":"yuri da silva",
+    "CPF":"384627927",
+    "matricula":"0582",
+    "dataNascimento":"2005-09-21",
+    "RG":"08765383",
+    "Disciplinas":[
+        {"nome": "ciencias", "nota":5.5},
+        {"nome": "portugues", "nota":7.5},
+        {"nome": "historia", "nota":8.9},
+        {"nome": "geografia", "nota":8.7},
+        {"nome": "filosofia", "nota":9.1}
+    ],
+    "endereco": {
+        "rua":"rua da alegria", 
+        "numero": "67",
+        "bairro": "rio a baixo",
+        "cidade": "macapa",
+        "cep": "36527-284"
+
+        }
+}
