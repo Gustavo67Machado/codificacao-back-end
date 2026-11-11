@@ -8,17 +8,29 @@ import { Aluno,AlunoDocumente } from "./schema/aluno.schema.js";
 @Injectable()
 export class AlunoService{
     constructor(@InjectModel(Aluno.name) private alunoModel: Model<AlunoDocumente>){}
-
+    
     async create (createAlunoDto: CreateAlunoDto):Promise<Aluno>{
         const createdAluno = new this.alunoModel(createAlunoDto);
         return createdAluno.save();
     }
-    async findAllPage(page: number, limit: number){
+    async findAllPage(page: number, limit: number, nome?: string, curso?:string){
+        
+        const filtro: any = {};
         const skip = (page - 1) * limit;
+        if(nome){
+            filtro.nome = {
+                $regex: new RegExp(nome, 'i'),
+            };
+        }
+    
+        if(curso){
+            filtro.cursos = curso;
+        }
         const [data, total] = await Promise.all([
-            this.alunoModel.find().skip(skip).limit(limit).exec(),
-            this.alunoModel.countDocuments().exec()
+            this.alunoModel.find(filtro).skip(skip).limit(limit).exec(),
+            this.alunoModel.countDocuments(filtro).exec()
         ]);
+
 
         return{
             data,
