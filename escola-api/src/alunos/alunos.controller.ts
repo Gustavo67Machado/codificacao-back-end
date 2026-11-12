@@ -2,7 +2,7 @@ import { Controller, Get,Post, Body, Patch, Param, Delete, Query, DefaultValuePi
 import { AlunoService } from "./aluno.service.js";
 import { CreateAlunoDto } from "./dto/create-alunos.dto.js";
 import { UpdateAlunoDto } from "./dto/update-alunos.dto.js";
-import { ApiTags, ApiOperation,ApiResponse, ApiQuery } from "@nestjs/swagger";
+import { ApiTags, ApiOperation,ApiResponse, ApiQuery } from "@nestjs/swagger"; 
 
 @ApiTags('alunos')
 @Controller('alunos')
