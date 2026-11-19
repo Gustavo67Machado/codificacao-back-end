@@ -9,16 +9,26 @@ import { CreateAlunoDto } from "./dto/create-alunos.dto.js";
 import { UpdateAlunoDto } from "./dto/update-alunos.dto.js";
 import { Aluno,AlunoDocumente } from "./schema/aluno.schema.js";
 import { MongoServerError } from "mongodb";
+import { ConfigService } from "@nestjs/config"; 
+import { variaveisAmbiente } from "../config/env.config.js";     
+// npx tsc --noEmit
 
 @Injectable()
 export class AlunoService{
-    constructor(@InjectModel(Aluno.name) private alunoModel: Model<AlunoDocumente>){}
+    constructor(@InjectModel(Aluno.name) private alunoModel: Model<AlunoDocumente>,
+   private readonly configService: ConfigService<variaveisAmbiente, true>){}
+   configVariaveis(){
+    const nodeEnv = this.configService.get('NODE_ENV', {infer: true});
+    const port = this.configService.get('PORT', {infer: true});
+    const mongoUri = this.configService.get('MONGO_URI', {infer: true});
+    const jwtSecret = this.configService.get('JWT_SECRET', {infer: true});
+   }
     
     async create (createAlunoDto: CreateAlunoDto):Promise<Aluno>{
 
         try{
             const createAluno = new this.alunoModel(createAlunoDto);
-            return await createAluno.save(); //!post
+            return await createAluno.save(); //!postg
         }catch(error: unknown){
             if(
                error instanceof MongoServerError && error.code === 11000
