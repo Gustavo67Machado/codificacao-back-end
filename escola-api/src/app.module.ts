@@ -14,14 +14,14 @@ import authConfig from './config/auth.config.js';
     ConfigModule.forRoot({
       isGlobal:true,
       load:[databaseConfig, authConfig],
-      validationSchema: joi.object({
-        NODE_ENV: joi.string() 
-        .valid('desenvolvimento', 'preoducao', 'teste')
-        .default('desenvolvimento'),
-        PORT: joi.number().default(3000),
-        MONGO_URI: joi.string().required(),
-        JWT_SECRET: joi. string().required(),
-      })
+      // validationSchema: joi.object({
+      //   NODE_ENV: joi.string() 
+      //   .valid('desenvolvimento', 'preoducao', 'teste')
+      //   .default('desenvolvimento'),
+      //   PORT: joi.number().default(3000),
+      //   MONGO_URI: joi.string().required(),
+      //   JWT_SECRET: joi. string().required(),
+      // }),
     }),
     MongooseModule.forRootAsync({
       imports:[ConfigModule],

@@ -36,6 +36,6 @@ async function bootstrap() {
   loggerDatabase.log(`Conectado em: ${configDb.uri}`);
   loggerDatabase.log(`Pool Máximo: ${configDb.maxPoolSize}`);
   loggerAuth.log(`chave secreta "que não é mais secreta: "${configAuth.jwtSecret}`);
-  loggerAuth.log(`Tempo de validade de Chave: ${configAuth.jwtWxpireIn}`);
+  loggerAuth.log(`Tempo de validade de Chave: ${configAuth.jwtExpiresIn}`);
 }
 await bootstrap();
